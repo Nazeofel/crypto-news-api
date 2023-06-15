@@ -65,3 +65,5 @@ app.get("/api/news", async (req, res, next) => {
 app.listen(PORT, () => {
   console.log("Server running...");
 });
+
+module.exports = app;
