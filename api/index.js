@@ -19,9 +19,9 @@ const keywords = 'a:contains("crypto"), a:contains("web3"), a:contains("blockcha
 let articles = [];
 
 // Function to fetch articles and populate the articles array
-const fetchArticles = () => {
-  newsArticles.forEach((newsArticle) => {
-    axios
+const fetchArticles = async () => {
+  newsArticles.forEach(async (newsArticle) => {
+    await axios
       .get(newsArticle.address)
       .then((response) => {
         console.log(response);
@@ -56,16 +56,11 @@ const fetchArticles = () => {
 };
 // Call the fetchArticles function to populate the articles array
 
-app.get("/api", (req, res, next) => {
-  res.append("Content-Type", "application/json");
-  res.append("Cache-Control", "s-max-age=1, stale-while-revalidate");
-});
-
-app.get("/api/news", (req, res, next) => {
-  fetchArticles();
-  res.append("Content-Type", "application/json");
-  res.append("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  return res.send(articles);
+app.get("/api/news", async (req, res, next) => {
+  await fetchArticles();
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  return res.json(articles);
 });
 
 app.listen(PORT, () => {
