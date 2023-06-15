@@ -56,7 +56,7 @@ const fetchArticles = async () => {
 };
 // Call the fetchArticles function to populate the articles array
 
-app.use((req, res, next) => {
+app.get((req, res, next) => {
   return res.send("nice");
 });
 
