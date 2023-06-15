@@ -56,10 +56,15 @@ const fetchArticles = async () => {
 };
 // Call the fetchArticles function to populate the articles array
 
-app.get("/api/news", async (req, res, next) => {
-  await fetchArticles();
+app.use((req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  next();
+});
+
+app.get("/api/news", async (req, res, next) => {
+  await fetchArticles();
+
   return res.json(articles);
 });
 
