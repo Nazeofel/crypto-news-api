@@ -20,12 +20,11 @@ let articles = [];
 let articlesf = ["ggegre"];
 
 // Function to fetch articles and populate the articles array
-const fetchArticles = async () => {
+const fetchArticles = () => {
   newsArticles.forEach((newsArticle) => {
     axios
       .get(newsArticle.address)
       .then((response) => {
-        console.log(response);
         const html = response.data;
         const $ = cheerio.load(html);
         let imageUrl;
@@ -61,10 +60,8 @@ app.get("/", (req, res, next) => {
   return res.send("nice");
 });
 
-app.get("/api/news", async (req, res, next) => {
-  await fetchArticles();
-  console.log("in the api news route ");
-  console.log(articlesf);
+app.get("/api/news", (req, res, next) => {
+  fetchArticles();
   return res.json(articles);
 });
 
