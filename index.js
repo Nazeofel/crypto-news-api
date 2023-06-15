@@ -21,10 +21,10 @@ let articles = [];
 // Function to fetch articles and populate the articles array
 const fetchArticles = async () => {
   newsArticles.forEach((newsArticle) => {
-    console.log("fuck inside the forEach");
     axios
       .get(newsArticle.address)
       .then((response) => {
+        console.log(response);
         const html = response.data;
         const $ = cheerio.load(html);
         let imageUrl;
