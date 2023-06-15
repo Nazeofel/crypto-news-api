@@ -62,7 +62,8 @@ app.get("/", (req, res, next) => {
 
 app.get("/api/news", async (req, res, next) => {
   await fetchArticles();
-
+  console.log("in the api news route ");
+  console.log(articles);
   return res.json(articles);
 });
 
