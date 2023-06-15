@@ -17,12 +17,11 @@ const newsArticles = [
 const keywords = 'a:contains("crypto"), a:contains("web3"), a:contains("blockchain"), a:contains("bitcoin"), a:contains("ethereum"), a:contains("binance"), a:contains("coinbase"), a:contains("sec"), a:contains("xrp"), a:contains("ripple"), a:contains("solana"), a:contains("coin")';
 
 let articles = [];
-let articlesf = ["ggegre"];
 
 // Function to fetch articles and populate the articles array
-const fetchArticles = () => {
-  newsArticles.forEach((newsArticle) => {
-    axios
+const fetchArticles = async () => {
+  for await (const newsArticle of newsArticles) {
+    await axios
       .get(newsArticle.address)
       .then((response) => {
         const html = response.data;
@@ -52,7 +51,7 @@ const fetchArticles = () => {
         });
       })
       .catch((error) => console.log(error));
-  });
+  }
 };
 // Call the fetchArticles function to populate the articles array
 
@@ -60,8 +59,9 @@ app.get("/", (req, res, next) => {
   return res.send("nice");
 });
 
-app.get("/api/news", (req, res, next) => {
-  fetchArticles();
+app.get("/api/news", async (req, res, next) => {
+  await fetchArticles();
+
   return res.json(articles);
 });
 
