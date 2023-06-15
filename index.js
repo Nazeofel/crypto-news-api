@@ -19,7 +19,7 @@ const keywords = 'a:contains("crypto"), a:contains("web3"), a:contains("blockcha
 let articles = [];
 
 // Function to fetch articles and populate the articles array
-const fetchArticles = () => {
+const fetchArticles = async () => {
   newsArticles.forEach((newsArticle) => {
     axios.get(newsArticle.address).then((response) => {
       const html = response.data;
@@ -52,9 +52,9 @@ const fetchArticles = () => {
 };
 
 // Call the fetchArticles function to populate the articles array
-fetchArticles();
 
-app.get("/api/news", (req, res, next) => {
+app.get("/api/news", async (req, res, next) => {
+  await fetchArticles();
   res.json(articles);
 });
 
