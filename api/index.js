@@ -54,6 +54,12 @@ const fetchArticles = async () => {
       .catch((error) => console.log(error));
   });
 };
+app.get("/api", (req, res) => {
+  const path = `/api/item/ntm`;
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+});
 
 // Call the fetchArticles function to populate the articles array
 
