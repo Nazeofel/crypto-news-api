@@ -20,6 +20,7 @@ let articles = [];
 
 // Function to fetch articles and populate the articles array
 const fetchArticles = async () => {
+  console.log("in there ? ");
   newsArticles.forEach((newsArticle) => {
     axios.get(newsArticle.address).then((response) => {
       const html = response.data;
@@ -46,6 +47,7 @@ const fetchArticles = async () => {
           url: newsArticle.base + url,
           source: newsArticle.name,
         });
+        console.log(articles);
       });
     });
   });
@@ -55,7 +57,8 @@ const fetchArticles = async () => {
 
 app.get("/api/news", async (req, res, next) => {
   await fetchArticles();
-  res.json(articles);
+  console.log("inside the route ????");
+  return res.json(articles);
 });
 
 app.listen(PORT, () => {
