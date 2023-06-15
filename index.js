@@ -54,7 +54,7 @@ const fetchArticles = () => {
 // Call the fetchArticles function to populate the articles array
 fetchArticles();
 
-app.get("/", (req, res, next) => {
+app.get("/api/news", (req, res, next) => {
   res.json(articles);
 });
 
