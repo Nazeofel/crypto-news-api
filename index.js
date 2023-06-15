@@ -20,36 +20,38 @@ let articles = [];
 
 // Function to fetch articles and populate the articles array
 const fetchArticles = async () => {
-  console.log("in there ? ");
   newsArticles.forEach((newsArticle) => {
-    axios.get(newsArticle.address).then((response) => {
-      const html = response.data;
-      const $ = cheerio.load(html);
-      let imageUrl;
+    console.log("fuck inside the forEach");
+    axios
+      .get(newsArticle.address)
+      .then((response) => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        let imageUrl;
 
-      $(keywords, html).each(function (index) {
-        const title = $(this).text();
-        const url = $(this).attr("href");
+        $(keywords, html).each(function (index) {
+          const title = $(this).text();
+          const url = $(this).attr("href");
 
-        if (
-          newsArticle.address ===
-          "https://techcrunch.com/category/cryptocurrency/"
-        ) {
-          const articleElements = $(".post-block");
-          const articleElement = articleElements.eq(index);
-          const img = articleElement.find("footer img");
-          imageUrl = img.attr("src");
-        }
+          if (
+            newsArticle.address ===
+            "https://techcrunch.com/category/cryptocurrency/"
+          ) {
+            const articleElements = $(".post-block");
+            const articleElement = articleElements.eq(index);
+            const img = articleElement.find("footer img");
+            imageUrl = img.attr("src");
+          }
 
-        articles.push({
-          title,
-          imageUrl,
-          url: newsArticle.base + url,
-          source: newsArticle.name,
+          articles.push({
+            title,
+            imageUrl,
+            url: newsArticle.base + url,
+            source: newsArticle.name,
+          });
         });
-        console.log(articles);
-      });
-    });
+      })
+      .catch((error) => console.log(error));
   });
 };
 
@@ -57,7 +59,6 @@ const fetchArticles = async () => {
 
 app.get("/api/news", async (req, res, next) => {
   await fetchArticles();
-  console.log("inside the route ????");
   return res.json(articles);
 });
 
