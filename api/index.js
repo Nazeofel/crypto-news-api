@@ -19,13 +19,13 @@ const keywords = 'a:contains("crypto"), a:contains("web3"), a:contains("blockcha
 let articles = [];
 
 // Function to fetch articles and populate the articles array
-const fetchArticles = async () => {
+const fetchArticles = () => {
   newsArticles.forEach((newsArticle) => {
-    fetch(newsArticle.address, {
-      method: "GET",
-    })
-      .then(async (res) => {
-        const html = await res.text();
+    axios
+      .get(newsArticle.address)
+      .then((response) => {
+        console.log(response);
+        const html = response.data;
         const $ = cheerio.load(html);
         let imageUrl;
 
@@ -55,8 +55,9 @@ const fetchArticles = async () => {
   });
 };
 // Call the fetchArticles function to populate the articles array
-app.post("/api/news", async (req, res, next) => {
-  await fetchArticles();
+
+app.get("/api/news", (req, res, next) => {
+  fetchArticles();
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   return res.json(articles);
