@@ -17,6 +17,7 @@ const newsArticles = [
 const keywords = 'a:contains("crypto"), a:contains("web3"), a:contains("blockchain"), a:contains("bitcoin"), a:contains("ethereum"), a:contains("binance"), a:contains("coinbase"), a:contains("sec"), a:contains("xrp"), a:contains("ripple"), a:contains("solana"), a:contains("coin")';
 
 let articles = [];
+let articlesf = ["ggegre"];
 
 // Function to fetch articles and populate the articles array
 const fetchArticles = async () => {
@@ -63,7 +64,7 @@ app.get("/", (req, res, next) => {
 app.get("/api/news", async (req, res, next) => {
   await fetchArticles();
   console.log("in the api news route ");
-  console.log(articles);
+  console.log(articlesf);
   return res.json(articles);
 });
 
