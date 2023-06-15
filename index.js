@@ -57,9 +57,7 @@ const fetchArticles = async () => {
 // Call the fetchArticles function to populate the articles array
 
 app.use((req, res, next) => {
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  next();
+  return res.send("nice");
 });
 
 app.get("/api/news", async (req, res, next) => {
